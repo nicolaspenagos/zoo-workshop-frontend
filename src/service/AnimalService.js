@@ -32,6 +32,11 @@ export class AnimalService {
 
    	}
 
+   	getAnimal(animalId){
+   		return axios.get(this.baseUrl+'/'+animalId).then(res => res.data);
+
+   	}
+
 
    		
    	

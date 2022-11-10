@@ -29,7 +29,9 @@ export default class App extends Component {
             age:'',
             height:'',
             weight:'',
-            date:''
+            date:'',
+            animalId:'',
+            animal:[]
         };
         this.animalService = new AnimalService();
         this.value = 'M';
@@ -52,14 +54,6 @@ export default class App extends Component {
         });
     }
 
-  
-
-
-
-
-    
-
- 
 
     render() {
 
@@ -72,35 +66,63 @@ export default class App extends Component {
                 <h1>Animals API</h1>
 
             </header>
-            <Card className ="card" title="Post Animal" subTitle="Enter the following animal data">
-                <div className="col">
-                    <InputText value={this.state.name} className="card__row" placeholder="Name" onChange={(e) => this.setState({name: e.target.value})}></InputText>
-                    <SelectButton value={this.state.sex} options={this.options} onChange={(e) => this.setState({ sex: e.value })} />
-                    <InputNumber value={this.state.age} className="card__row" placeholder="Age"  onChange={(e) => this.setState({age: e.value})}></InputNumber>
-                    <InputNumber value={this.state.weight} className="card__row" placeholder="Weight" onChange={(e) => this.setState({weight: e.value})} ></InputNumber>
-                    <InputNumber value={this.state.height} className="card__row" placeholder="Height" onChange={(e) => this.setState({height: e.value})}></InputNumber>
-                    <Calendar value={this.state.date} className="card__row" placeholder="Arrival Date" onChange={(e) => this.setState({ date: e.value })}></Calendar >
-                   
-          
-                    <Button className="card__row button" 
-                        onClick={
+            <div className="row">
+                <Card className ="card" title="Post Animal" subTitle="Enter the following animal data">
+                    <div className="col">
+                        <InputText value={this.state.name} className="card__row" placeholder="Name" onChange={(e) => this.setState({name: e.target.value})}></InputText>
+                        <SelectButton value={this.state.sex} options={this.options} onChange={(e) => this.setState({ sex: e.value })} />
+                        <InputNumber value={this.state.age} className="card__row" placeholder="Age"  onChange={(e) => this.setState({age: e.value})}></InputNumber>
+                        <InputNumber value={this.state.weight} className="card__row" placeholder="Weight" onChange={(e) => this.setState({weight: e.value})} ></InputNumber>
+                        <InputNumber value={this.state.height} className="card__row" placeholder="Height" onChange={(e) => this.setState({height: e.value})}></InputNumber>
+                        <Calendar value={this.state.date} className="card__row" placeholder="Arrival Date" onChange={(e) => this.setState({ date: e.value })}></Calendar >
+                       
+              
+                        <Button className="card__row button" 
+                            onClick={
+                                ()=>{
+                                    this.animalService.postAnimal(this.state.name, this.state.sex, this.state.age,this.state.weight,this.state.height,this.state.date)
+                                        .then(
+                                            ()=>{
+                                                 this.animalService.getAll().then(data => {
+
+                                                    this.setState({ animals: data });
+
+                                                });
+                                            }
+                                        ); 
+                                    
+                                    this.setState({name:'',sex:'M', age:'', weight:'', height:'', date:''})
+                                }
+                            }>Post</Button>
+                    </div>
+                </Card>
+                <Card className=" card__search" title="Get Animal" subTitle="Enter an animal name">
+                    <div className="col">
+                        <InputText value={this.state.animalId} className="card__row" placeholder="Animal name" onChange={(e) => this.setState({animalId: e.target.value})}></InputText>
+                        <Button className="button__search" onClick={
                             ()=>{
-                                this.animalService.postAnimal(this.state.name, this.state.sex, this.state.age,this.state.weight,this.state.height,this.state.date)
-                                    .then(
-                                        ()=>{
-                                             this.animalService.getAll().then(data => {
-
-                                                this.setState({ animals: data });
-
-                                            });
-                                        }
-                                    ); 
-                                
-                                this.setState({name:'',sex:'M', age:'', weight:'', height:'', date:''})
+                           
+                                this.animalService.getAnimal(this.state.animalId).then(
+                                    anim => {
+                                        let animalArray = [];
+                                        animalArray.push(anim);
+                                        this.setState({animal:animalArray});
+                                    }
+                                );
                             }
-                        }>Post</Button>
-                </div>
-            </Card>
+                        }>Search</Button>
+                        <DataTable value={this.state.animal}>
+                            <Column field="animalId" header="AnimalId"></Column>
+                            <Column field="name" header="Name"></Column>
+                            <Column field="sex" header="Sex"></Column>
+                            <Column field="age" header="Age"></Column>
+                            <Column field="weight" header="Weight"></Column>
+                            <Column field="height" header="Height"></Column>
+                            <Column field="arrivalDate" header="Arrival Date"></Column>
+                        </DataTable>
+                    </div>
+                </Card>
+            </div>
         
             <Panel className="animals" header="getAnimals( )" toggleable>
                  <DataTable value={this.state.animals}>

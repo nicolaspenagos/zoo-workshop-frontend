@@ -69,6 +69,11 @@
     margin-bottom: 10px !important;
 }
 
+.row{
+  display: flex;
+  flex-direction: row;
+}
+
 .col{
   display: flex;
   flex-direction: column;
@@ -76,6 +81,18 @@
 
 .button{
   width: 70px;
+}
+
+.button__search{
+  width: 90px;
+  margin-bottom: 10px !important;
+}
+
+.card__search{
+  margin-top: 15px;
+  margin-left: 20px;
+  height: 300px;
+  width:900px;
 }
 
 
