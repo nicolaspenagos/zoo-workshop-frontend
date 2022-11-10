@@ -37,6 +37,7 @@
   margin-top: 30px;
   margin-right: 70px;
   margin-left: 70px;
+
 }
 
 .title{
@@ -57,6 +58,20 @@
   height: 40px;
   margin-right: 8px
 } 
+.python{
+  width: 400px;
+  position: absolute;
+  left: 0;
+  bottom: 0; 
+
+}
+
+.plant{
+  width: 450px;
+  position: absolute;
+  right: 0;
+  top: 0; 
+}
 
 .card{
     margin-top: 15px;
@@ -81,6 +96,7 @@
 
 .button{
   width: 70px;
+
 }
 
 .button__search{
@@ -95,6 +111,27 @@
   width:900px;
 }
 
+.welcome__title{
+  font-size: 40px;
+  color: #20232A;
+  margin-bottom: 10px;
+
+}
+
+.welcome__info{
+  max-width: 500px;
+  color: #6E6864;
+  text-align: center;
+
+}
+
+.welcome__container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+ 
+}
 
 @keyframes App-logo-spin {
   from {
