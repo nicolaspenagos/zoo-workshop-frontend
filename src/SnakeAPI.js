@@ -31,7 +31,11 @@ export default class snakeApi extends Component {
             weight: '',
             date: '',
             animalId: '',
-            animal: []
+            animal: [],
+            mother:[],
+            father:[],
+            motherId:'',
+            fatherId:''
         };
         this.animalService = new AnimalService();
         this.value = 'M';
@@ -57,6 +61,7 @@ export default class snakeApi extends Component {
 
     render() {
 
+
          return (
             <div className="main">
 
@@ -75,12 +80,13 @@ export default class snakeApi extends Component {
                         <InputNumber value={this.state.weight} className="card__row" placeholder="Weight" onChange={(e) => this.setState({weight: e.value})} ></InputNumber>
                         <InputNumber value={this.state.height} className="card__row" placeholder="Height" onChange={(e) => this.setState({height: e.value})}></InputNumber>
                         <Calendar value={this.state.date} className="card__row" placeholder="Arrival Date" onChange={(e) => this.setState({ date: e.value })}></Calendar >
-                       
+                        <InputText value={this.state.fatherId} className="card__row" placeholder="FatherId" onChange={(e) => this.setState({fatherId: e.value})}></InputText>
+                        <InputText value={this.state.motherId} className="card__row" placeholder="MotherId" onChange={(e) => this.setState({motherId: e.value})}></InputText>
               
                         <Button className="card__row button" 
                             onClick={
                                 ()=>{
-                                    this.animalService.postAnimal(this.state.name, this.state.sex, this.state.age,this.state.weight,this.state.height,this.state.date)
+                                    this.animalService.postAnimal(this.state.name, this.state.sex, this.state.age,this.state.weight,this.state.height,this.state.date, this.state.motherId, this.state.fatherId)
                                         .then(
                                             ()=>{
                                                  this.animalService.getAll().then(data => {
@@ -102,13 +108,45 @@ export default class snakeApi extends Component {
                         <Button className="button__search" onClick={
                             ()=>{
                            
-                                this.animalService.getAnimal(this.state.animalId).then(
+                                if(this.state.animalId!=""){
+                                    this.animalService.getAnimal(this.state.animalId).then(
                                     anim => {
-                                        let animalArray = [];
-                                        animalArray.push(anim);
-                                        this.setState({animal:animalArray});
+
+                                  
+                                        console.log(anim);
+
+                                        if(Object.keys(anim).length>0){
+                                            let animalArray = [];
+                                            animalArray.push(anim);
+                                            this.setState({animal:animalArray});
+                                          
+                                        }else{
+                                            this.setState({animal:null});
+                                        }
+                                        
+
+                                        if(anim.fatherInfo){
+                                            let dadArray = [];
+                                            dadArray.push(anim.fatherInfo);
+                                            this.setState({father:dadArray});
+                                        }else{
+                                            this.setState({father:null});
+                                        }
+
+                                        if(anim.motherInfo){
+                                            let momArray = [];
+                                            momArray.push(anim.motherInfo);
+                                            this.setState({mother:momArray});
+                                        }else{
+                                            this.setState({mother:null});
+                                        }
+                                
+                                   
                                     }
                                 );
+
+                                }
+                                
                             }
                         }>Search</Button>
                         <DataTable value={this.state.animal}>
@@ -120,6 +158,29 @@ export default class snakeApi extends Component {
                             <Column field="height" header="Height"></Column>
                             <Column field="arrivalDate" header="Arrival Date"></Column>
                         </DataTable>
+                        <Panel className="parent" header="Mother" toggleable>
+                            <DataTable value={this.state.father}>
+                                <Column field="animalId" header="AnimalId"></Column>
+                                <Column field="name" header="Name"></Column>
+                                <Column field="sex" header="Sex"></Column>
+                                <Column field="age" header="Age"></Column>
+                                <Column field="weight" header="Weight"></Column>
+                                <Column field="height" header="Height"></Column>
+                                <Column field="arrivalDate" header="Arrival Date"></Column>
+                            </DataTable>
+                         </Panel>
+                        <Panel className="parent" header="Father" toggleable>
+                            <DataTable value={this.state.mother}>
+                                <Column field="animalId" header="AnimalId"></Column>
+                                <Column field="name" header="Name"></Column>
+                                <Column field="sex" header="Sex"></Column>
+                                <Column field="age" header="Age"></Column>
+                                <Column field="weight" header="Weight"></Column>
+                                <Column field="height" header="Height"></Column>
+                                <Column field="arrivalDate" header="Arrival Date"></Column>
+                            </DataTable>
+                         </Panel>
+                    
                     </div>
                 </Card>
             </div>

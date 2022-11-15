@@ -6,10 +6,17 @@ export class AnimalService {
         return axios.get(this.baseUrl).then(res => res.data);
     }
 
-   	postAnimal(name,sex,age,weight,height,date){
+   	postAnimal(name,sex,age,weight,height,date, momId, dadId){
 
    		const parsedDate = date.toISOString().slice(0, -1);
-   		const snake = {name,sex,age,weight,height, arrivalDate: parsedDate};
+
+      let motherId = (momId.length>0)? momId:null;
+      let fatherId = (dadId.length>0)? dadId:null;
+   		const snake = {name,sex,age,weight,height, arrivalDate: parsedDate, motherId, fatherId};
+
+
+
+
 
    		return axios.post(this.baseUrl,snake)
    			.then(res => res.data)

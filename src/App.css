@@ -106,8 +106,9 @@
 
 .card__search{
   margin-top: 15px;
+  margin-bottom: 15px;
   margin-left: 20px;
-  height: 300px;
+
   width:900px;
 }
 
@@ -123,6 +124,10 @@
   color: #6E6864;
   text-align: center;
 
+}
+
+.parent{
+  margin-top: 10px
 }
 
 .welcome__container{
