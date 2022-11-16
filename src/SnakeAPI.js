@@ -59,6 +59,11 @@ export default class snakeApi extends Component {
     }
 
 
+    test(){
+        console.log(this.state.sex);
+    }
+
+
     render() {
 
 
@@ -76,19 +81,24 @@ export default class snakeApi extends Component {
                     <div className="col">
                         <InputText value={this.state.name} className="card__row" placeholder="Name" onChange={(e) => this.setState({name: e.target.value})}></InputText>
                         <SelectButton value={this.state.sex} options={this.options} onChange={(e) => this.setState({ sex: e.value })} />
-                        <InputNumber value={this.state.age} className="card__row" placeholder="Age"  onChange={(e) => this.setState({age: e.value})}></InputNumber>
-                        <InputNumber value={this.state.weight} className="card__row" placeholder="Weight" onChange={(e) => this.setState({weight: e.value})} ></InputNumber>
-                        <InputNumber value={this.state.height} className="card__row" placeholder="Height" onChange={(e) => this.setState({height: e.value})}></InputNumber>
+                        <InputNumber suffix=" years" value={this.state.age} className="card__row" placeholder="Age"  onChange={(e) => this.setState({age: e.value})}></InputNumber>
+                        <InputNumber suffix=" kg" value={this.state.weight} className="card__row" placeholder="Weight" onChange={(e) => this.setState({weight: e.value})} ></InputNumber>
+                        <InputNumber suffix=" m" value={this.state.height} className="card__row" placeholder="Height" onChange={(e) => this.setState({height: e.value})}></InputNumber>
                         <Calendar value={this.state.date} className="card__row" placeholder="Arrival Date" onChange={(e) => this.setState({ date: e.value })}></Calendar >
-                        <InputText value={this.state.fatherId} className="card__row" placeholder="FatherId" onChange={(e) => this.setState({fatherId: e.value})}></InputText>
-                        <InputText value={this.state.motherId} className="card__row" placeholder="MotherId" onChange={(e) => this.setState({motherId: e.value})}></InputText>
+                        <InputText  value={this.state.fatherId} className="card__row" placeholder="FatherId" onChange={(e) => this.setState({fatherId: e.target.value})}></InputText>
+                        <InputText  suffix=" m" value={this.state.motherId} className="card__row" placeholder="MotherId" onChange={(e) => this.setState({motherId: e.target.value})}></InputText>
               
                         <Button className="card__row button" 
                             onClick={
                                 ()=>{
+                                   // console.log(this.state.name+''+this.state.fatherId+' '+this.state.motherId);
+                                    
+                                    
                                     this.animalService.postAnimal(this.state.name, this.state.sex, this.state.age,this.state.weight,this.state.height,this.state.date, this.state.motherId, this.state.fatherId)
                                         .then(
                                             ()=>{
+
+                                                 this.test();
                                                  this.animalService.getAll().then(data => {
 
                                                     this.setState({ animals: data });
@@ -144,6 +154,11 @@ export default class snakeApi extends Component {
                                    
                                     }
                                 );
+
+                                }else{
+                                    this.setState({animal:null});
+                                    this.setState({father:null});
+                                    this.setState({mother:null});
 
                                 }
                                 

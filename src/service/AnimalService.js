@@ -8,11 +8,13 @@ export class AnimalService {
 
    	postAnimal(name,sex,age,weight,height,date, momId, dadId){
 
+      console.log(momId+','+dadId);
    		const parsedDate = date.toISOString().slice(0, -1);
 
       let motherId = (momId.length>0)? momId:null;
       let fatherId = (dadId.length>0)? dadId:null;
    		const snake = {name,sex,age,weight,height, arrivalDate: parsedDate, motherId, fatherId};
+      console.log(snake);
 
 
 
