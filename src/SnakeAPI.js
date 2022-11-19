@@ -107,7 +107,7 @@ export default class snakeApi extends Component {
                                             }
                                         ); 
                                     
-                                    this.setState({name:'',sex:'M', age:'', weight:'', height:'', date:''})
+                                    this.setState({name:'',sex:'M', age:'', weight:'', height:'', date:'', motherId:'', fatherId:''})
                                 }
                             }>Post</Button>
                     </div>
